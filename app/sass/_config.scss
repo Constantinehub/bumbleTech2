@@ -1,0 +1,338 @@
+// IMPORT SECTION
+
+@import "../../node_modules/bootstrap/scss/bootstrap-reboot.scss"; // Bootstrap Reboot collection
+@import "../../node_modules/bootstrap/scss/mixins/_breakpoints.scss"; // Bootstrap Breakpoints mixin
+@import "../../node_modules/bootstrap/scss/bootstrap-grid.scss"; // Optional Bootstrap Grid
+@import "../../node_modules/daterangepicker/daterangepicker.css";
+@import "../../node_modules/uikit/dist/css/uikit.min.css";
+ //@import "node_modules/bootstrap/scss/utilities/_sizing.scss" // Optional Bootstrap Utilites
+
+
+// USER VARIABLES SECTION
+
+// Colors
+$dark-blue: 	#37495e;
+$blue-grey: 	#94a9c0;
+$green: 		#14af08;
+$red: 			#ff0000;
+$tangerine: 	#ff9900;
+$blind: 		#eceff4;
+$border:    	#d5d5d5;
+$gray:			#bababa;
+$gray-text: 	#ababab;
+
+$fontsize:   16px;
+$mainfamily: Lato, sans-serif;
+
+// Bootstrap compatible gutter variable => $gutter
+
+$grid-gutter-width: 20px;
+$gutter: $grid-gutter-width;
+
+
+// Breakpoints
+
+$largest: 1600px;
+$desktop: 1200px;
+$laptop: 992px;
+$tablet: 768px;
+$mobile: 480px;
+
+
+// FONTS LOAD SECTION
+
+@mixin font($f-name, $f-style, $f-weight, $f-url) {
+	@font-face {
+		font-family: $f-name;
+		font-style: $f-style;
+		font-weight: $f-weight;
+		src: url($f-url) format('woff2');
+	}
+}
+
+@include font('Lato', normal, 400, '../fonts/lato-regular-webfont.woff2');
+@include font('Lato', normal, 700, '../fonts/lato-bold-webfont.woff2');
+@include font('Lato', normal, 200, '../fonts/lato-light-webfont.woff2');
+
+::selection {
+	background-color: $blue-grey;
+	color: #fff;
+}
+
+// Responsive media queries
+
+@mixin largest {
+	@media (max-width: #{$largest}) {
+		@content
+	}
+}
+
+@mixin desktop {
+	@media (max-width: #{$desktop}) {
+		@content
+	}
+}
+
+@mixin laptop {
+	@media (max-width: #{$laptop}) {
+		@content
+	}
+}
+
+@mixin tablet {
+	@media (max-width: #{$tablet}) {
+		@content
+	}
+}
+
+@mixin mobile {
+	@media (max-width: #{$mobile}) {
+		@content
+	}
+}
+
+input, textarea {
+	outline: none;
+
+	&:focus:required:invalid {
+		border-color: red;
+	}
+
+	&:required:valid {
+		border-color: green
+	}
+}
+
+body {
+	font-size: $fontsize;
+	min-width: 320px;
+	position: relative;
+	line-height: 1.65;
+	font-family: $mainfamily;
+	overflow-x: hidden;
+
+	&:after {
+		content: '';
+		opacity: 0;
+		overflow: hidden;
+		visibility: hidden;
+		transition: 300ms ease-in-out;
+	}
+}
+
+@mixin placeholder {
+	&::-webkit-input-placeholder {@content}
+	&:-moz-placeholder           {@content}
+	&::-moz-placeholder          {@content}
+	&:-ms-input-placeholder      {@content}
+}
+
+.row {
+	flex-grow: 1;
+
+	.col {
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+.wrapper {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	transition: 300ms ease-in-out;
+}
+
+.wrap {
+	padding: 0 96px;
+
+	@include desktop {
+		padding: 0 30px;
+	}
+
+	@include tablet {
+		padding: 0 15px;
+	}
+}
+
+.btn {
+	height: 40px;
+	padding: 0 13px;
+	border-radius: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	font-size: 1.5em;
+	text-decoration: none;
+	outline: none;
+	border: 1px solid transparent;
+	box-shadow: none;
+	transition: 300ms ease-in-out;
+
+	&:focus, &:hover {
+		outline: none;
+		color: white;
+		text-decoration: none;
+	}
+
+	&.btn-fullwidth {
+		width: 100%;
+	}
+
+	&.btn-large {
+		min-width: 400px;
+
+		@include desktop {
+			min-width: 300px;
+		}
+
+		@include tablet {
+			min-width: auto;
+
+			span {
+				display: inline-block;
+				white-space: nowrap;
+			}
+		}
+
+		@include mobile {
+			font-size: 1.2em;
+			padding: 0 20px;
+		}
+	}
+
+	&.btn-medium {
+		min-width: 220px;
+		font-size: 1em;
+	}
+
+	&.btn-small {
+		min-width: 50px;
+	}
+
+	&.btn-white {
+		background-color: white;
+		border-color: $border;
+		color: black;
+		&:hover {
+			background-color: lighten($border, 5%);
+		}
+	}
+
+	&.btn-green {
+		background-color: $green;
+		&:hover {
+			background-color: darken($green, 10%);
+		}
+	}
+
+	&.btn-orange {
+		background-color: $tangerine;
+		&:hover {
+			background-color: darken($tangerine, 10%);
+		}
+	}
+
+	&.push-right {
+		margin-right: 60px;
+
+		@include desktop {
+			margin-right: 30px;
+		}
+	}
+
+	&.more-btn {
+		@include mobile {
+			font-size: 0.75rem;
+			min-height: 10px;
+			padding: 0 5px;
+		}
+	}
+
+	.btn-icon {
+		max-width: 21px;
+		display: inline-flex;
+	}
+
+	span {
+		line-height: 0;
+	}
+
+	span + .btn-icon {
+		margin-left: 20px;
+	}
+}
+
+.chart-box {
+	width: 100%;
+	height: 100%;
+	padding: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.meter-chart {
+	width: 250px;
+	height: 240px;
+}
+
+.color-red {
+	color: $red;
+}
+
+.daterangepicker {
+	&.show-calendar {
+		.drp-buttons {
+			width: 100%;
+			display: flex;
+			align-items: center;
+
+			@include tablet {
+				flex-wrap: wrap;
+			}
+
+			.drp-selected {
+				margin-right: auto;
+
+				@include tablet {
+					width: 100%;
+					margin-bottom: 10px;
+				}
+			}
+
+			.drp-btn {
+				padding: 8px 30px;
+				margin-right: 10px;
+				outline: none;
+				cursor: pointer;
+				border: none;
+				border-radius: 3px;
+				box-shadow: none;
+
+				&.btn-primary {
+					color: white;
+					background-color: $green;
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
